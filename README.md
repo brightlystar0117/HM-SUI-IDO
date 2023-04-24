@@ -1,8 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# IDO Contract on SUI Blockchain
 
-## Getting Started
+This contract enables Initial DEX Offerings (IDOs) on the SUI blockchain. An IDO is a decentralized fundraising mechanism for new crypto projects, where participants can contribute funds and receive newly minted tokens in return.
 
-First, run the development server:
+## Features
+
+The IDO contract has the following features:
+
+**Whitelist**: The IDO owner can maintain a whitelist of addresses that are allowed to participate in the IDO. Participants who are not on the whitelist will be rejected.
+**Funding Cap**: The IDO owner can set a funding cap for the IDO, beyond which no more funds will be accepted.
+**Start and End Time**: The IDO owner can set a start and end time for the IDO, during which participants can contribute funds.
+**Funds Transfer**: When a participant contributes funds to the IDO, the funds are transferred to the IDO owner's account and the participant receives newly minted tokens in return.
+
+## Usage
+
+### Creating an IDO
+
+To create an IDO, call the **create_ido** function with the following parameters:
+
+- **start_time**: The start time of the IDO, in Unix timestamp format.
+- **end_time**: The end time of the IDO, in Unix timestamp format.
+- **whitelisted_addresses**: A list of addresses that are allowed to participate in the IDO.
+- **ctx**: A mutable reference to the TxContext object.
+
+### Participating in an IDO
+
+To participate in an IDO, first check that you are on the whitelist by calling the **is_whitelisted** function with the following parameters:
+
+- **ido**: A mutable reference to the IDO object.
+- **address**: Your SUI Wallet Address.
+
+If you are on the whitelist, you can contribute funds to the IDO by calling the **fund_ido** function with the following parameters:
+
+- **ido**: A mutable reference to the IDO object.
+- **amount**: The amount of SUI tokens you want to contribute.
+- **ctx**: A mutable reference to the TxContext object.
+- **clock**: A mutable reference to the Clock object.
+
+### Transfer Funds
+
+After the end of the IDO, the IDO owner can transfer the funds raised by calling the **transfer_funds** function with the following parameters:
+
+- **ido**: A mutable reference to the IDO object.
+- **amount**: The amount of SUI tokens the IDO owner wants to withdraw or transfer.
+- **ctx**: A mutable reference to the TxContext object.
+
+### Checking the Whitelisted Address of the IDO
+
+To check the **whitelisted_addresses** of the IDO, you can call the following functions:
+
+- **is_whitelisted**: Checks if an address is on the IDO whitelist.
+
+## Deployed on SUI Testnet
+
+### SUI Explorer
+
+- [SUI Testnet](https://explorer.sui.io/object/0x7a397566abee80f9ecfef31e3e98cae7f9af0fb684cb6f3f9ba8ad43ede766fb)
+
+## Run Locally
+
+Clone the project
+
+```bash
+git clonegit@github.com:karangorania/Block-Chain-Full-stack.git
+```
+
+Go to the project directory
+
+```bash
+cd Block-Chain-Full-stack
+```
+
+Checkout to feature branch
+
+```bash
+git checkout feature
+```
+
+Install dependencies
 
 ```bash
 npm run dev
@@ -12,27 +86,20 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+npm run dev
+npm run build
+npm run start
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+For SUI Contract Build
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+PS: You need **Rust**, **Move** & **SUI Binaries** install on your system.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+sui move build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+sui client publish --gas-budget 1000
+```
