@@ -86,7 +86,7 @@ const Create = () => {
               value={startTime}
               onChange={(event) => setStartTime(event.target.value)}
               className="appearance-none bg-[#1E293B] rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Enter your address"
+              placeholder="Enter Start Time in Epoch"
             />
           </div>
           <div className="mb-4">
